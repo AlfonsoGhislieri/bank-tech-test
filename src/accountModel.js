@@ -11,22 +11,24 @@ class Account {
 
   deposit = (value) => {
     this._balance += value
-
-    this._transactions.push({
-      transactionType: "Deposit", 
-      value: value
-    });
+    this.#addTransaction({value: value, transactionType: "Deposit"})
   };
 
   withdraw = (value) => {
     if (this._balance - value < 0) {
-      throw new Error(`Insufficient funds - current balance: ${this._balance}`);
+      return `Insufficient funds - current balance: ${this._balance}`;
+    }
+    else if (value <= 0) {
+      return `Invalid amount`;
     }
 
     this._balance -= value
+    this.#addTransaction({value: value, transactionType: "Withdraw"})
+  }
 
+  #addTransaction = ({value: value, transactionType: type}) => {
     this._transactions.push({
-      transactionType: "Withdraw", 
+      transactionType: type, 
       value: value
     });
   }

@@ -23,7 +23,7 @@ describe('bankModel', () => {
   });
 
   describe('.deposit', () => {
-    test('.deposit adds a transaction to transactions array', () => {
+    test('adds a transaction to transactions array', () => {
       account.deposit(500);
       expect(account._transactions.length).toEqual(1);
       expect(account._transactions[0]).toEqual({
@@ -31,7 +31,7 @@ describe('bankModel', () => {
         value: 500,});
     });
 
-    test('.deposit raises balance', () => {
+    test('raises balance', () => {
       account.deposit(500);
       expect(account.getBalance()).toEqual(500);
     });
@@ -39,12 +39,18 @@ describe('bankModel', () => {
 
   describe('.withdraw', () => {
     test('raises error if withdrawing more money than in balance', () => {
-      expect(() => {
-        account.withdraw(500).toThrow('Insufficient funds - current balance: 0')
-      });
+      expect(account.withdraw(500)).toEqual('Insufficient funds - current balance: 0')
     });
 
-    test('.withdraw adds a transaction to transactions array', () => {
+    test('raises error if withdrawing 0', () => {
+      expect(account.withdraw(-1)).toEqual('Invalid amount')
+    });
+
+    test('raises error if withdrawing less than 0', () => {
+      expect(account.withdraw(-1)).toEqual('Invalid amount')
+    });
+
+    test('adds a transaction to transactions array', () => {
       account.deposit(500);
       account.withdraw(500);
 
@@ -54,7 +60,7 @@ describe('bankModel', () => {
         value: 500,});
     });
 
-    test('.deposit raises balance', () => {
+    test('lowers balance', () => {
       account.deposit(500);
       account.withdraw(500);
       expect(account.getBalance()).toEqual(0);
