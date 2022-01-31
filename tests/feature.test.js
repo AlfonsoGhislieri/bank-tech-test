@@ -1,5 +1,5 @@
-const Client = require('../lib/clientModel.js')
-const Bank = require('../lib/bankModel.js')
+const Client = require('../src/clientModel.js')
+const Bank = require('../src/bankModel.js')
 
 describe('Feature', () => {
   test('Feature test', () => {

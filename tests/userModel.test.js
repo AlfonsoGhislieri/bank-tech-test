@@ -1,4 +1,4 @@
-const Client = require('../lib/clientModel.js')
+const Client = require('../src/clientModel.js')
 
 describe('clientModel', () => {
 
