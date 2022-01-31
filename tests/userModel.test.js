@@ -6,6 +6,4 @@ describe('userModel', () => {
     let user = new User({name: 'Test'});
     expect(user.getName()).toBe('Test')
   })
-
-
 });
