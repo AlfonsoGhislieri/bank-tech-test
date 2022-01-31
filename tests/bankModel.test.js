@@ -18,10 +18,19 @@ describe('bankModel', () => {
     });
   });
 
-  test('.add client', () => {
+  test('.addClient adds a client to clients array', () => {
     bank.addClient(userMock)
-    expect(bank.getClients().length).toEqual(1);
+    expect(bank._clients.length).toEqual(1);
+    expect(bank._clients[0]).toBe(userMock);
+  });
+  
+  test('.getClients returns array of all clients', () => {
+    const userMock2 = { getName: "test2" };
+    bank.addClient(userMock)
+    bank.addClient(userMock2)
+    expect(bank.getClients().length).toEqual(2);
     expect(bank.getClients()[0]).toBe(userMock);
+    expect(bank.getClients()[1]).toBe(userMock2);
   });
 
   describe('.deposit', () => {
@@ -29,7 +38,6 @@ describe('bankModel', () => {
       bank.deposit({client: userMock, value: 500});
       expect(bank._transactions.length).toEqual(1)
       expect(bank._transactions[0]).toEqual({client: userMock, transactionType: "Deposit", value: 500})
-    })
-
+    });
   });
 });
