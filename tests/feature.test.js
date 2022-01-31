@@ -1,7 +1,9 @@
-const User = require('../lib/userModel.js')
+const Client = require('../lib/clientModel.js')
+const Bank = require('../lib/bankModel.js')
 
 describe('Feature', () => {
   test('Feature test', () => {
-    let user = new User({name: 'Test'});
+    let client = new Client({name: 'Test'});
+    let bank = new Bank(client);
   })
 });

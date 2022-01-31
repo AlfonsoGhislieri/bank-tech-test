@@ -1,9 +1,9 @@
-const User = require('../lib/userModel.js')
+const Client = require('../lib/clientModel.js')
 
-describe('userModel', () => {
+describe('clientModel', () => {
 
-  test('model stores name of User', () => {
-    let user = new User({name: 'Test'});
-    expect(user.getName()).toBe('Test')
+  test('model stores name of Client', () => {
+    let client = new Client({name: 'Test'});
+    expect(client.getName()).toBe('Test')
   })
 });
