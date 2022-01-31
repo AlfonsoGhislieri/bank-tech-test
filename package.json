@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/AlfonsoGhislieri/bank-tech-test#readme",
   "devDependencies": {
+    "eslint": "^8.8.0",
+    "eslint-config-google": "^0.14.0",
     "jest": "^27.4.7"
   }
 }

@@ -1,5 +1,5 @@
 class Bank {
-  constructor(){
+  constructor() {
     this._clients = [];
   }
 
