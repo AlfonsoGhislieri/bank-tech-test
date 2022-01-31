@@ -12,10 +12,6 @@ describe('bankModel', () => {
       expect(bank.getClients()).toBeInstanceOf(Array);
       expect(bank.getClients().length).toBe(0);
     });
-    test('initialized with an empty array of transactions', () => {
-      expect(bank._transactions).toBeInstanceOf(Array);
-      expect(bank._transactions.length).toEqual(0);
-    });
   });
 
   test('.addClient adds a client to clients array', () => {
@@ -31,13 +27,5 @@ describe('bankModel', () => {
     expect(bank.getClients().length).toEqual(2);
     expect(bank.getClients()[0]).toBe(userMock);
     expect(bank.getClients()[1]).toBe(userMock2);
-  });
-
-  describe('.deposit', () => {
-    test('.deposit adds a transaction to transactions array', () => {
-      bank.deposit({client: userMock, value: 500});
-      expect(bank._transactions.length).toEqual(1)
-      expect(bank._transactions[0]).toEqual({client: userMock, transactionType: "Deposit", value: 500})
-    });
   });
 });
