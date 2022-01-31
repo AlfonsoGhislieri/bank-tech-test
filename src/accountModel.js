@@ -17,6 +17,19 @@ class Account {
       value: value
     });
   };
+
+  withdraw = (value) => {
+    if (this._balance - value < 0) {
+      throw new Error(`Insufficient funds - current balance: ${this._balance}`);
+    }
+
+    this._balance -= value
+
+    this._transactions.push({
+      transactionType: "Withdraw", 
+      value: value
+    });
+  }
 }
 
 module.exports = Account;
