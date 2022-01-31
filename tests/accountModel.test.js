@@ -1,10 +1,14 @@
+const Client = require('../src/clientModel.js');
 const Account = require('../src/accountModel.js');
+const Transaction = require('../src/transactionModel.js');
+jest.mock('../src/clientModel.js');
+jest.mock('../src/transactionModel.js');
 
-describe('bankModel', () => {
+describe('Account', () => {
   let account;
-  const userMock = {getName: 'test'};
+
   beforeEach(() => {
-    account = new Account(userMock);
+    account = new Account(Client, Transaction);
   });
 
   describe('initialization', () => {
@@ -18,19 +22,19 @@ describe('bankModel', () => {
     });
 
     test('stores owner of account', () => {
-      expect(account.getOwner()).toEqual(userMock);
+      expect(account.getOwner()).toEqual(Client);
     });
+
+    test('has access to transaction model', () => {
+      expect(account._transactionModel).toEqual(Transaction)
+    })
+    test('can create an instance of a transaction model', () => {
+      const transactionInstance = new account._transactionModel({amount: 500, transactionType: "deposit"})
+      expect(transactionInstance).toBeInstanceOf(Transaction)
+    })
   });
 
   describe('.deposit', () => {
-    test('adds a transaction to transactions array', () => {
-      account.deposit(500);
-      expect(account._transactions.length).toEqual(1);
-      expect(account._transactions[0]).toEqual({
-        transactionType: 'Deposit',
-        value: 500});
-    });
-
     test('raises balance', () => {
       account.deposit(500);
       expect(account.getBalance()).toEqual(500);
@@ -43,21 +47,11 @@ describe('bankModel', () => {
     });
 
     test('raises error if withdrawing 0', () => {
-      expect(account.withdraw(-1)).toEqual('Invalid amount');
+      expect(account.withdraw(0)).toEqual('Invalid amount');
     });
 
     test('raises error if withdrawing less than 0', () => {
       expect(account.withdraw(-1)).toEqual('Invalid amount');
-    });
-
-    test('adds a transaction to transactions array', () => {
-      account.deposit(500);
-      account.withdraw(500);
-
-      expect(account._transactions.length).toEqual(2);
-      expect(account._transactions[1]).toEqual({
-        transactionType: 'Withdraw',
-        value: 500});
     });
 
     test('lowers balance', () => {
