@@ -12,6 +12,12 @@ describe('bankModel', () => {
       expect(account._transactions).toBeInstanceOf(Array);
       expect(account._transactions.length).toEqual(0);
     });
+    test('initialized with balance of 0', () => {
+      expect(account.getBalance()).toEqual(0);
+    });
+    test('stores owner of account', () => {
+      expect(account.getOwner()).toEqual(userMock);
+    });
   });
 
   describe('.deposit', () => {
@@ -24,10 +30,7 @@ describe('bankModel', () => {
     });
     test('.deposit raises balance', () => {
       account.deposit(500);
-      expect(account._transactions.length).toEqual(1);
-      expect(account._transactions[0]).toEqual({
-        transactionType: "Deposit", 
-        value: 500,});
+      expect(account.getBalance()).toEqual(500);
     });
   });
 });
