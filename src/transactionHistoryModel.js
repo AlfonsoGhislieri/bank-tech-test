@@ -12,24 +12,17 @@ class TransactionHistory {
         .map( (transaction) => this.#createStatement(transaction))
         .join('');
 
+    console.log(result)
     return result;
   };
 
   #createStatement = (transaction) => {
-    let credit = ""
-    let debit = ""
+    let credit = transaction['credit'];
+    let debit = transaction['debit'];
     const date = transaction['date'];
     const balance = transaction['balance'];
 
-    if (transaction['credit'] != null) {
-      credit = transaction['credit'];
-    }
-
-    if (transaction['debit'] != null) {
-      debit = transaction['debit'];
-    }
-
-    return (`${date} || ${credit} || ${debit} || ${balance}\n`);
+    return (`${date} || ${(credit || "")} || ${(debit || "")} || ${balance}\n`);
   };
 }
 
