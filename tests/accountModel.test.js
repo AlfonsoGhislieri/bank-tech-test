@@ -1,5 +1,5 @@
-const Client = require('../src/clientModel.js');
 const Account = require('../src/accountModel.js');
+const Client = require('../src/clientModel.js');
 const Transaction = require('../src/transactionModel.js');
 jest.mock('../src/clientModel.js');
 jest.mock('../src/transactionModel.js');
