@@ -28,10 +28,11 @@ _______
 account.getOwner()
 account.deposit(500)
 account.withdraw(250)
-account.getStatements()
-'date || credit || debit || balance\n' +
-  '01/02/2022 ||  || 250 || 250\n' +
-  '01/02/2022 || 500 ||  || 500\n'
+account.getStatements() 
+--->
+  date || credit || debit || balance
+  01/02/2022 ||  || 250 || 250
+  01/02/2022 || 500 ||  || 500
 ```
 
 ### Tests and seeing coverage
