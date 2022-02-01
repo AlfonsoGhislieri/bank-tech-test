@@ -90,7 +90,9 @@ describe('Account', () => {
     });
 
     test('displays transaction statement from transactionHistory model', () => {
-      expect(account.getStatements())
+      console.log = jest.fn();
+      account.getStatements();
+      expect(console.log.mock.calls[0][0])
           .toEqual('date || credit || debit || balance\n' +
           '01/02/2022 ||  || 500 || 0\n' +
           '01/02/2022 || 500 ||  || 500\n');

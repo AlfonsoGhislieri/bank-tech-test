@@ -26,10 +26,12 @@ describe('Feature', () => {
     expect(account._transactionHistoryModel._transactions[1])
         .toBeInstanceOf(Transaction);
 
+    console.log = jest.fn();
     expect(account._transactionHistoryModel).toBeInstanceOf(TransactionHistory);
-    expect(account.getStatements())
-        .toEqual('date || credit || debit || balance\n' +
-        '01/02/2022 ||  || 500 || 0\n' +
-        '01/02/2022 || 500 ||  || 500\n');
+    account.getStatements();
+    expect(console.log.mock.calls[0][0])
+      .toEqual('date || credit || debit || balance\n' +
+      '01/02/2022 ||  || 500 || 0\n' +
+      '01/02/2022 || 500 ||  || 500\n');
   });
 });
