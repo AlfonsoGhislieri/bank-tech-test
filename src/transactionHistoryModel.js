@@ -7,7 +7,7 @@ class TransactionHistory {
 
   viewStatements = () => {
     let result = 'date || credit || debit || balance\n'
-    for (const transaction in this._transactions) {
+    for (const transaction in this._transactions.reverse()) {
       const statement = this.#createStatement(this._transactions[transaction]);
       result += statement 
     }
