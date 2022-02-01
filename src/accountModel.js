@@ -21,16 +21,34 @@ class Account {
   };
 
   withdraw = (value) => {
-    if (this.#balanceBelowZero(value)) {
-      return `Insufficient funds - current balance: ${this._balance}`;
-    } else if (this.#invalidAmount(value)) {
-      return 'Invalid amount';
-    } else {
+    const error = this.#checkForErrors(value)
+
+    if (error['error'] === true){
+      return error['message']
+    }else {
       this._balance -= value;
       this.#createTransaction({
         debit: value,
         balance: this._balance,
       });
+    };
+  };
+
+  #createTransaction = ({credit = null, debit = null, balance}) => {
+    this._transactionHistoryModel.addTransaction(new this._transactionModel({
+      credit: credit,
+      debit: debit,
+      balance: balance,
+    }));
+  };
+
+  #checkForErrors = (value) => {
+    if (this.#balanceBelowZero(value)) {
+      return { error: true , message: `Insufficient funds - current balance: ${this._balance}`};
+    } else if (this.#invalidAmount(value)) {
+      return { error: true , message: 'Invalid amount' };
+    } else {
+      return { error: false , message: null };
     }
   };
 
@@ -40,14 +58,6 @@ class Account {
 
   #invalidAmount = (value) => {
     return value <= 0;
-  };
-
-  #createTransaction = ({credit = null, debit = null, balance}) => {
-    this._transactionHistoryModel.addTransaction(new this._transactionModel({
-      credit: credit,
-      debit: debit,
-      balance: balance,
-    }));
   };
 }
 
