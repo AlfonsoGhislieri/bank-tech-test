@@ -26,18 +26,21 @@ describe('Account', () => {
     });
 
     test('has access to transaction model', () => {
-      expect(account._transactionModel).toEqual(Transaction)
-    })
-    test('can create an instance of a transaction model', () => {
-      const transactionInstance = new account._transactionModel({amount: 500, transactionType: "deposit"})
-      expect(transactionInstance).toBeInstanceOf(Transaction)
-    })
+      expect(account._transactionModel).toEqual(Transaction);
+    });
   });
 
   describe('.deposit', () => {
     test('raises balance', () => {
+      expect(account.getBalance()).toEqual(0);
       account.deposit(500);
       expect(account.getBalance()).toEqual(500);
+    });
+    
+    test('creates transaction instance and adds it to transactions array', () => {
+      account.deposit(500);
+      expect(account._transactions.length).toEqual(1);
+      expect(account._transactions[0]).toBeInstanceOf(Transaction);
     });
   });
 
@@ -56,8 +59,18 @@ describe('Account', () => {
 
     test('lowers balance', () => {
       account.deposit(500);
+      expect(account.getBalance()).toEqual(500);
       account.withdraw(500);
       expect(account.getBalance()).toEqual(0);
+    });
+
+    test('creates transaction instance and adds it to transactions array', () => {
+      account.deposit(500);
+      account.withdraw(500);
+
+      expect(account._transactions.length).toEqual(2);
+      expect(account._transactions[1]).toBeInstanceOf(Transaction);
+      console.log(account._transactions)
     });
   });
 });

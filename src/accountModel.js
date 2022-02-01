@@ -12,17 +12,27 @@ class Account {
 
   deposit = (value) => {
     this._balance += value;
-    this.#addTransaction({value: value, transactionType: 'Deposit'});
+    this.#createTransaction({
+      value: value, 
+      transactionType: 'deposit',
+      balance: this._balance,
+      date: new Date().toLocaleTimeString()
+    });
   };
 
   withdraw = (value) => {
     if (this.#balanceBelowZero(value)) {
       return `Insufficient funds - current balance: ${this._balance}`;
     } else if (this.#invalidAmount(value)) {
-      return `Invalid amount`;
+      return 'Invalid amount';
     } else {
       this._balance -= value;
-      this.#addTransaction({value: value, transactionType: 'Withdraw'});
+      this.#createTransaction({
+        value: value, 
+        transactionType: 'withdraw',
+        balance: this._balance,
+        date: new Date().toLocaleTimeString()
+      });
     }
   };
 
@@ -34,11 +44,13 @@ class Account {
     return value <= 0
   }
 
-  #addTransaction = ({value: value, transactionType: type}) => {
-    this._transactions.push({
+  #createTransaction = ({value: value, transactionType: type, balance: balance, date: date}) => {
+    this._transactions.push(new this._transactionModel({
       transactionType: type,
       value: value,
-    });
+      balance: balance,
+      date: date
+    }));
   };
 }
 
