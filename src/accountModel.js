@@ -10,6 +10,8 @@ class Account {
 
   getBalance = () => this._balance;
 
+  getStatements = () => this._transactionHistoryModel.viewStatements();
+
   deposit = (value) => {
     this._balance += value;
     this.#createTransaction({

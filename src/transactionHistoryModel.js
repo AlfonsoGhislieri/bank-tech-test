@@ -16,12 +16,12 @@ class TransactionHistory {
   };
 
   #createStatement = (transaction) => {
-    let credit = transaction['credit'];
-    let debit = transaction['debit'];
+    const credit = transaction['credit'];
+    const debit = transaction['debit'];
     const date = transaction['date'];
     const balance = transaction['balance'];
 
-    return (`${date} || ${(credit || "")} || ${(debit || "")} || ${balance}\n`);
+    return (`${date} || ${(credit || '')} || ${(debit || '')} || ${balance}\n`);
   };
 }
 

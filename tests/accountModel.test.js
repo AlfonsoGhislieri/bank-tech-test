@@ -7,18 +7,17 @@ jest.mock('../src/transactionModel.js');
 jest.mock('../src/transactionHistoryModel.js');
 
 describe('Account', () => {
-  TransactionHistory.prototype.addTransaction = jest.fn().mockImplementation(() => null)
+  TransactionHistory.prototype.addTransaction = jest.fn().mockImplementation(() => null);    
 
   beforeEach(() => {
     Transaction.mockClear();
     account = new Account({
-      client: Client, 
+      client: Client,
       transactionModel: Transaction,
       transactionHistoryModel: TransactionHistory});
   });
 
   describe('initialization', () => {
-
     test('initialized with balance of 0', () => {
       expect(account.getBalance()).toEqual(0);
     });
@@ -43,10 +42,9 @@ describe('Account', () => {
       expect(account.getBalance()).toEqual(500);
     });
 
-    test('creates transaction instance and adds it to transactions array', () => {
+    test('creates transaction instance', () => {
       account.deposit(500);
       expect(account._transactionModel).toHaveBeenCalledTimes(1);
-
     });
   });
 
@@ -64,17 +62,27 @@ describe('Account', () => {
     });
 
     test('lowers balance', () => {
-      account.deposit(500);
+      account.deposit(500); // deposit so that no error when withdrawing
       expect(account.getBalance()).toEqual(500);
       account.withdraw(500);
       expect(account.getBalance()).toEqual(0);
     });
 
-    test('creates transaction instance and adds it to transactions array', () => {
+    test('creates transaction instance', () => {
       account.deposit(500); // deposit so that no error when withdrawing
       account.withdraw(500);
 
       expect(account._transactionModel).toHaveBeenCalledTimes(2);
     });
   });
+
+  describe('.getStatements', () => {
+    test('displays transaction statement obtained from transactionHistory model', () => {
+      TransactionHistory.prototype.viewStatements = jest.fn().mockImplementation(() => {
+        return `date || credit || debit || balance\n01/02/2022 ||  || 500 || 0\n01/02/2022 || 500 ||  || 500\n`
+      }); 
+      expect(account.getStatements()).toEqual(`date || credit || debit || balance\n01/02/2022 ||  || 500 || 0\n01/02/2022 || 500 ||  || 500\n`)
+    })
+  });
+
 });
