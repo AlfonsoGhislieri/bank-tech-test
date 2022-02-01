@@ -1,9 +1,9 @@
 class Transaction {
-  constructor({amount: amount, transactionType: type, balance: balance,}) {
-    this.amount = amount;
-    this.type = type;
-    this.balance = balance;
+  constructor({credit: credit, debit: debit, balance: balance,}) {
     this.date = new Date().toLocaleDateString();
+    this.credit = credit;
+    this.debit = debit;
+    this.balance = balance;
   }
 }
 

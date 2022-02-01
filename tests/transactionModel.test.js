@@ -8,24 +8,24 @@ describe('Transaction', () => {
   describe('initialization', () => {
     test('an instance of a transaction stores a deposit with date', () => {
       const transaction = new Transaction({
-        amount: 500, 
-        transactionType: "deposit",
-        balance: 500 });
+        credit: 500, 
+        debit: null, 
+        balance: 500});
 
-      expect(transaction.amount).toEqual(500);
-      expect(transaction.type).toEqual("deposit");
+      expect(transaction.credit).toEqual(500);
+      expect(transaction.debit).toEqual(null);
       expect(transaction.balance).toEqual(500)
       expect(transaction.date).toEqual("01/02/2022")
     });
     
     test('an instance of a transaction stores a withdrawal with date', () => {
       const transaction = new Transaction({
-        amount: 500, 
-        transactionType: "withdraw",
+        credit: null, 
+        debit: 500, 
         balance: 0 });
 
-      expect(transaction.amount).toEqual(500);
-      expect(transaction.type).toEqual("withdraw");
+      expect(transaction.credit).toEqual(null);
+      expect(transaction.debit).toEqual(500);
       expect(transaction.balance).toEqual(0)
       expect(transaction.date).toEqual("01/02/2022")
     });

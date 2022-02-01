@@ -13,8 +13,7 @@ class Account {
   deposit = (value) => {
     this._balance += value;
     this.#createTransaction({
-      amount: value, 
-      transactionType: 'deposit',
+      credit: value, 
       balance: this._balance
     });
   };
@@ -27,8 +26,7 @@ class Account {
     } else {
       this._balance -= value;
       this.#createTransaction({
-        amount: value, 
-        transactionType: 'withdraw',
+        debit: value, 
         balance: this._balance
       });
     }
@@ -42,11 +40,11 @@ class Account {
     return value <= 0
   }
 
-  #createTransaction = ({amount: value, transactionType: type, balance: balance}) => {
+  #createTransaction = ({credit = null , debit = null, balance}) => {
     this._transactions.push(new this._transactionModel({
-      transactionType: type,
-      amount: value,
-      balance: balance
+      balance: balance,
+      credit: credit,
+      debit: debit,
     }));
   };
 }
