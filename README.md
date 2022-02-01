@@ -23,7 +23,7 @@ const Account = require('./src/accountModel.js');
 const user = new Client({name: 'User'});
 const account = new Account({client: user});
 
-Eg:
+Eg: (Chosen instead of a img as this a program that works in Node)
 _______
 account.getOwner()
 account.deposit(500)
@@ -38,5 +38,15 @@ account.getStatements()
 ```
 npm test \\ runs all tests and shows coverage
 ```
+
+### Approach
+
+I decided to tackle the tech-test by trying to deconstruct the approach in multiple classes in order to adhere to SRP and allow for the code to be easily changed in the future.
+
+- `Client` class was added but not originally needed. I liked the idea that the account would have to have an owner, and if this was to be scaled this could store all of the information of a client.
+
+- `Account` class takes care of all of the funcationality, it allows a user to deposit, withdraw and view his statements. I wanted this to act as a 'controller' which would tie together all the other classes.
+  - `Transaction` is injected into `Account`, everytime the user deposits or withdraws money an instance of transaction is created, and then passed to the `TransactionHistory` class (injected and initialized in `Account`), which takes care of storing all of the transaction instances.
+  - `TransactionHistory` also maps all the transactions together and allows the user to see these by using the `.getStatements()` method in the `Account` class.
 
 

@@ -17,14 +17,19 @@ describe('Feature', () => {
     account.deposit(500);
     expect(account.getBalance()).toEqual(500);
     expect(account._transactionHistoryModel._transactions.length).toEqual(1);
-    expect(account._transactionHistoryModel._transactions[0]).toBeInstanceOf(Transaction);
+    expect(account._transactionHistoryModel._transactions[0])
+        .toBeInstanceOf(Transaction);
 
     account.withdraw(500);
     expect(account.getBalance()).toEqual(0);
     expect(account._transactionHistoryModel._transactions.length).toEqual(2);
-    expect(account._transactionHistoryModel._transactions[1]).toBeInstanceOf(Transaction);
+    expect(account._transactionHistoryModel._transactions[1])
+        .toBeInstanceOf(Transaction);
 
-  expect(account._transactionHistoryModel).toBeInstanceOf(TransactionHistory);
-    expect(account.getStatements()).toEqual(`date || credit || debit || balance\n01/02/2022 ||  || 500 || 0\n01/02/2022 || 500 ||  || 500\n`);
+    expect(account._transactionHistoryModel).toBeInstanceOf(TransactionHistory);
+    expect(account.getStatements())
+        .toEqual('date || credit || debit || balance\n' +
+        '01/02/2022 ||  || 500 || 0\n' +
+        '01/02/2022 || 500 ||  || 500\n');
   });
 });

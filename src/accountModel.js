@@ -2,7 +2,11 @@ const Transaction = require('./transactionModel');
 const TransactionHistory = require('./transactionHistoryModel');
 
 class Account {
-  constructor({client, transactionModel = Transaction, transactionHistoryModel = TransactionHistory}) {
+  constructor({
+    client,
+    transactionModel = Transaction,
+    transactionHistoryModel = TransactionHistory,
+  }) {
     this._owner = client;
     this._transactionModel = transactionModel;
     this._transactionHistoryModel = new transactionHistoryModel();
@@ -24,11 +28,11 @@ class Account {
   };
 
   withdraw = (value) => {
-    const error = this.#checkForErrors(value)
+    const error = this.#checkForErrors(value);
 
-    if (error['error'] === true){
-      return error['message']
-    }else {
+    if (error['error'] === true) {
+      return error['message'];
+    } else {
       this._balance -= value;
       this.#createTransaction({
         debit: value,
@@ -47,11 +51,14 @@ class Account {
 
   #checkForErrors = (value) => {
     if (this.#balanceBelowZero(value)) {
-      return { error: true , message: `Insufficient funds - current balance: ${this._balance}`};
+      return {
+        error: true,
+        message: `Insufficient funds - current balance: ${this._balance}`}
+      ;
     } else if (this.#invalidAmount(value)) {
-      return { error: true , message: 'Invalid amount' };
+      return {error: true, message: 'Invalid amount'};
     } else {
-      return { error: false , message: null };
+      return {error: false, message: null};
     }
   };
 

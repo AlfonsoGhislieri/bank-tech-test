@@ -7,7 +7,7 @@ jest.mock('../src/transactionModel.js');
 jest.mock('../src/transactionHistoryModel.js');
 
 describe('Account', () => {
-  TransactionHistory.prototype.addTransaction = jest.fn().mockImplementation(() => null);    
+  TransactionHistory.prototype.addTransaction = jest.fn().mockImplementation(() => null);
 
   beforeEach(() => {
     Transaction.mockClear();
@@ -77,12 +77,16 @@ describe('Account', () => {
   });
 
   describe('.getStatements', () => {
-    test('displays transaction statement obtained from transactionHistory model', () => {
+    test('displays transaction statement from transactionHistory model', () => {
       TransactionHistory.prototype.viewStatements = jest.fn().mockImplementation(() => {
-        return `date || credit || debit || balance\n01/02/2022 ||  || 500 || 0\n01/02/2022 || 500 ||  || 500\n`
-      }); 
-      expect(account.getStatements()).toEqual(`date || credit || debit || balance\n01/02/2022 ||  || 500 || 0\n01/02/2022 || 500 ||  || 500\n`)
-    })
+        return ('date || credit || debit || balance\n' +
+        '01/02/2022 ||  || 500 || 0\n' +
+        '01/02/2022 || 500 ||  || 500\n');
+      });
+      expect(account.getStatements())
+          .toEqual('date || credit || debit || balance\n' +
+          '01/02/2022 ||  || 500 || 0\n' +
+          '01/02/2022 || 500 ||  || 500\n');
+    });
   });
-
 });
