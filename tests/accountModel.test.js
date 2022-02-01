@@ -70,7 +70,6 @@ describe('Account', () => {
 
       expect(account._transactions.length).toEqual(2);
       expect(account._transactions[1]).toBeInstanceOf(Transaction);
-      console.log(account._transactions)
     });
   });
 });

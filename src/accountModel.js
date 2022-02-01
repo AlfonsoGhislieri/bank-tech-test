@@ -13,10 +13,9 @@ class Account {
   deposit = (value) => {
     this._balance += value;
     this.#createTransaction({
-      value: value, 
+      amount: value, 
       transactionType: 'deposit',
-      balance: this._balance,
-      date: new Date().toLocaleTimeString()
+      balance: this._balance
     });
   };
 
@@ -28,10 +27,9 @@ class Account {
     } else {
       this._balance -= value;
       this.#createTransaction({
-        value: value, 
+        amount: value, 
         transactionType: 'withdraw',
-        balance: this._balance,
-        date: new Date().toLocaleTimeString()
+        balance: this._balance
       });
     }
   };
@@ -44,12 +42,11 @@ class Account {
     return value <= 0
   }
 
-  #createTransaction = ({value: value, transactionType: type, balance: balance, date: date}) => {
+  #createTransaction = ({amount: value, transactionType: type, balance: balance}) => {
     this._transactions.push(new this._transactionModel({
       transactionType: type,
-      value: value,
-      balance: balance,
-      date: date
+      amount: value,
+      balance: balance
     }));
   };
 }
