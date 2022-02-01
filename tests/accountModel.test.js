@@ -36,7 +36,7 @@ describe('Account', () => {
       account.deposit(500);
       expect(account.getBalance()).toEqual(500);
     });
-    
+
     test('creates transaction instance and adds it to transactions array', () => {
       account.deposit(500);
       expect(account._transactions.length).toEqual(1);

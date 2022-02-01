@@ -13,8 +13,8 @@ class Account {
   deposit = (value) => {
     this._balance += value;
     this.#createTransaction({
-      credit: value, 
-      balance: this._balance
+      credit: value,
+      balance: this._balance,
     });
   };
 
@@ -26,21 +26,21 @@ class Account {
     } else {
       this._balance -= value;
       this.#createTransaction({
-        debit: value, 
-        balance: this._balance
+        debit: value,
+        balance: this._balance,
       });
     }
   };
 
   #balanceBelowZero = (value) => {
-    return this._balance - value < 0
-  }
+    return this._balance - value < 0;
+  };
 
   #invalidAmount = (value) => {
-    return value <= 0
-  }
+    return value <= 0;
+  };
 
-  #createTransaction = ({credit = null , debit = null, balance}) => {
+  #createTransaction = ({credit = null, debit = null, balance}) => {
     this._transactions.push(new this._transactionModel({
       credit: credit,
       debit: debit,
