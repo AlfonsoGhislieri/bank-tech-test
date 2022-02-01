@@ -1,5 +1,5 @@
 class Transaction {
-  constructor({credit: credit, debit: debit, balance: balance,}) {
+  constructor({credit, debit, balance}) {
     this.date = new Date().toLocaleDateString();
     this.credit = credit;
     this.debit = debit;

@@ -14,7 +14,6 @@ describe('Feature', () => {
     expect(account.getBalance()).toEqual(500)
     account.withdraw(500)
     expect(account.getBalance()).toEqual(0)
-    console.log(account._transactions)
-
+    // console.log(account._transactions)
   })
 });

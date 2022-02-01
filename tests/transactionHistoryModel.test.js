@@ -2,10 +2,10 @@ const TransactionHistory = require('../src/transactionHistoryModel.js');
 
 describe('TransactionHistory', () => {
   const transactionMock = { 
-    amount: 500,
-    type: "deposit",
+    date: "01/02/2022",
+    credit: 500,
+    debit: null,
     balance: 500,
-    date: "01/02/2022"
   };
 
   let transactionHistory;
@@ -25,9 +25,8 @@ describe('TransactionHistory', () => {
 
   test('displays transaction history', () => {
     transactionHistory.addTransaction(transactionMock);
-    expect(transactionHistory.viewAllTransactions()).toEqual(
-      'date || credit || debit || balance\n01/02/2022 || 500 ||  || 500'
-      
+    expect(transactionHistory.viewStatements()).toEqual(
+      'date || credit || debit || balance\n01/02/2022 || 500 || null || 500\n'
       );
   });
 })

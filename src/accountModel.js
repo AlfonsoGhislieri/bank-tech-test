@@ -42,9 +42,9 @@ class Account {
 
   #createTransaction = ({credit = null , debit = null, balance}) => {
     this._transactions.push(new this._transactionModel({
-      balance: balance,
       credit: credit,
       debit: debit,
+      balance: balance,
     }));
   };
 }
