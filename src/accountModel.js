@@ -1,5 +1,8 @@
+const Transaction = require('./transactionModel');
+const TransactionHistory = require('./transactionHistoryModel');
+
 class Account {
-  constructor({client, transactionModel, transactionHistoryModel}) {
+  constructor({client, transactionModel = Transaction, transactionHistoryModel = TransactionHistory}) {
     this._owner = client;
     this._transactionModel = transactionModel;
     this._transactionHistoryModel = new transactionHistoryModel();

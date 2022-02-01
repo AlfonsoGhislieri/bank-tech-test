@@ -8,25 +8,23 @@ timekeeper.freeze(time);
 
 describe('Feature', () => {
   test('Feature test', () => {
-    let client = new Client({name: 'Test'});
-    let account = new Account({
-      client: client, 
-      transactionModel: Transaction,
-      transactionHistoryModel: TransactionHistory
-    })
-    expect(account.getOwner()).toEqual(client)
-    expect(account.getBalance()).toEqual(0)
+    const client = new Client({name: 'Test'});
+    const account = new Account({client: client});
 
-    account.deposit(500)
-    expect(account.getBalance()).toEqual(500)
-    expect(account._transactionHistoryModel._transactions.length).toEqual(1)
-    expect(account._transactionHistoryModel._transactions[0]).toBeInstanceOf(Transaction)
+    expect(account.getOwner()).toEqual(client);
+    expect(account.getBalance()).toEqual(0);
 
-    account.withdraw(500)
-    expect(account.getBalance()).toEqual(0)
-    expect(account._transactionHistoryModel._transactions.length).toEqual(2)
-    expect(account._transactionHistoryModel._transactions[1]).toBeInstanceOf(Transaction)
+    account.deposit(500);
+    expect(account.getBalance()).toEqual(500);
+    expect(account._transactionHistoryModel._transactions.length).toEqual(1);
+    expect(account._transactionHistoryModel._transactions[0]).toBeInstanceOf(Transaction);
 
+    account.withdraw(500);
+    expect(account.getBalance()).toEqual(0);
+    expect(account._transactionHistoryModel._transactions.length).toEqual(2);
+    expect(account._transactionHistoryModel._transactions[1]).toBeInstanceOf(Transaction);
+
+  expect(account._transactionHistoryModel).toBeInstanceOf(TransactionHistory);
     expect(account.getStatements()).toEqual(`date || credit || debit || balance\n01/02/2022 ||  || 500 || 0\n01/02/2022 || 500 ||  || 500\n`);
-  })
+  });
 });
