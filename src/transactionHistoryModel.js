@@ -12,7 +12,6 @@ class TransactionHistory {
         .map( (transaction) => this.#createStatement(transaction))
         .join('');
 
-    console.log(result)
     return result;
   };
 

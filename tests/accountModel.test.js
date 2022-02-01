@@ -1,21 +1,23 @@
 const Account = require('../src/accountModel.js');
 const Client = require('../src/clientModel.js');
 const Transaction = require('../src/transactionModel.js');
+const TransactionHistory = require('../src/transactionHistoryModel.js');
 jest.mock('../src/clientModel.js');
 jest.mock('../src/transactionModel.js');
+jest.mock('../src/transactionHistoryModel.js');
 
 describe('Account', () => {
-  let account;
+  TransactionHistory.prototype.addTransaction = jest.fn().mockImplementation(() => null)
 
   beforeEach(() => {
-    account = new Account(Client, Transaction);
+    Transaction.mockClear();
+    account = new Account({
+      client: Client, 
+      transactionModel: Transaction,
+      transactionHistoryModel: TransactionHistory});
   });
 
   describe('initialization', () => {
-    test('initialized with an empty array of transactions', () => {
-      expect(account._transactions).toBeInstanceOf(Array);
-      expect(account._transactions.length).toEqual(0);
-    });
 
     test('initialized with balance of 0', () => {
       expect(account.getBalance()).toEqual(0);
@@ -28,6 +30,10 @@ describe('Account', () => {
     test('has access to transaction model', () => {
       expect(account._transactionModel).toEqual(Transaction);
     });
+
+    test('creates an instance of transaction history model', () => {
+      expect(account._transactionHistoryModel).toBeInstanceOf(TransactionHistory);
+    });
   });
 
   describe('.deposit', () => {
@@ -39,8 +45,8 @@ describe('Account', () => {
 
     test('creates transaction instance and adds it to transactions array', () => {
       account.deposit(500);
-      expect(account._transactions.length).toEqual(1);
-      expect(account._transactions[0]).toBeInstanceOf(Transaction);
+      expect(account._transactionModel).toHaveBeenCalledTimes(1);
+
     });
   });
 
@@ -65,11 +71,10 @@ describe('Account', () => {
     });
 
     test('creates transaction instance and adds it to transactions array', () => {
-      account.deposit(500);
+      account.deposit(500); // deposit so that no error when withdrawing
       account.withdraw(500);
 
-      expect(account._transactions.length).toEqual(2);
-      expect(account._transactions[1]).toBeInstanceOf(Transaction);
+      expect(account._transactionModel).toHaveBeenCalledTimes(2);
     });
   });
 });

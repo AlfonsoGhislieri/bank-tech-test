@@ -1,9 +1,9 @@
 class Account {
-  constructor(client, transactionModel) {
+  constructor({client, transactionModel, transactionHistoryModel}) {
     this._owner = client;
     this._transactionModel = transactionModel;
+    this._transactionHistoryModel = new transactionHistoryModel();
     this._balance = 0;
-    this._transactions = [];
   }
 
   getOwner = () => this._owner;
@@ -41,7 +41,7 @@ class Account {
   };
 
   #createTransaction = ({credit = null, debit = null, balance}) => {
-    this._transactions.push(new this._transactionModel({
+    this._transactionHistoryModel.addTransaction(new this._transactionModel({
       credit: credit,
       debit: debit,
       balance: balance,
