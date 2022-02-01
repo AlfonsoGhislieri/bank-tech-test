@@ -26,7 +26,7 @@ describe('TransactionHistory', () => {
   test('displays transaction history', () => {
     transactionHistory.addTransaction(transactionMock);
     expect(transactionHistory.viewStatements()).toEqual(
-        'date || credit || debit || balance\n01/02/2022 || 500 || null || 500\n',
+        'date || credit || debit || balance\n01/02/2022 || 500 ||  || 500\n',
     );
   });
 
@@ -41,7 +41,7 @@ describe('TransactionHistory', () => {
     transactionHistory.addTransaction(transactionMock2);
 
     expect(transactionHistory.viewStatements()).toEqual(
-        'date || credit || debit || balance\n03/02/2022 || null || 500 || 0\n01/02/2022 || 500 || null || 500\n',
+        'date || credit || debit || balance\n03/02/2022 ||  || 500 || 0\n01/02/2022 || 500 ||  || 500\n',
     );
   });
 });

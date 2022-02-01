@@ -9,16 +9,26 @@ class TransactionHistory {
     let result = 'date || credit || debit || balance\n';
 
     result += this._transactions.reverse()
-        .map( (elem) => this.#createStatement(elem)).join('');
+        .map( (transaction) => this.#createStatement(transaction))
+        .join('');
 
     return result;
   };
 
   #createStatement = (transaction) => {
+    let credit = ""
+    let debit = ""
     const date = transaction['date'];
-    const credit = transaction['credit'];
-    const debit = transaction['debit'];
     const balance = transaction['balance'];
+
+    if (transaction['credit'] != null) {
+      credit = transaction['credit'];
+    }
+
+    if (transaction['debit'] != null) {
+      debit = transaction['debit'];
+    }
+
     return (`${date} || ${credit} || ${debit} || ${balance}\n`);
   };
 }
