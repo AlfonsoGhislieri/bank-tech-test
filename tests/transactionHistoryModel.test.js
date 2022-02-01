@@ -42,7 +42,9 @@ describe('TransactionHistory', () => {
       transactionHistory.addTransaction(transactionMock2);
 
       expect(transactionHistory.viewStatements()).toEqual(
-          'date || credit || debit || balance\n03/02/2022 ||  || 500 || 0\n01/02/2022 || 500 ||  || 500\n');
+          'date || credit || debit || balance' +
+          '03/02/2022 ||  || 500 || 0\n' +
+          '01/02/2022 || 500 ||  || 500\n');
     });
   });
 });

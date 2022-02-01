@@ -53,8 +53,8 @@ class Account {
     if (this.#balanceBelowZero(value)) {
       return {
         error: true,
-        message: `Insufficient funds - current balance: ${this._balance}`}
-      ;
+        message: `Insufficient funds - current balance: ${this._balance}`,
+      };
     } else if (this.#invalidAmount(value)) {
       return {error: true, message: 'Invalid amount'};
     } else {

@@ -10,11 +10,12 @@ describe('Account', () => {
   TransactionHistory.prototype.addTransaction = jest.fn().mockImplementation(() => null);
 
   beforeEach(() => {
-    Transaction.mockClear();
+    jest.clearAllMocks();
     account = new Account({
       client: Client,
       transactionModel: Transaction,
-      transactionHistoryModel: TransactionHistory});
+      transactionHistoryModel: TransactionHistory,
+    });
   });
 
   describe('initialization', () => {
@@ -42,9 +43,12 @@ describe('Account', () => {
       expect(account.getBalance()).toEqual(500);
     });
 
-    test('creates transaction instance', () => {
+    test('transaction and transaction history are called', () => {
+      const spy = jest.spyOn(account._transactionHistoryModel, 'addTransaction');
+
       account.deposit(500);
-      expect(account._transactionModel).toHaveBeenCalledTimes(1);
+      expect(Transaction).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -68,25 +72,34 @@ describe('Account', () => {
       expect(account.getBalance()).toEqual(0);
     });
 
-    test('creates transaction instance', () => {
+    test('transaction and transaction history are called', () => {
+      const spy = jest.spyOn(account._transactionHistoryModel, 'addTransaction');
       account.deposit(500); // deposit so that no error when withdrawing
       account.withdraw(500);
 
-      expect(account._transactionModel).toHaveBeenCalledTimes(2);
+      expect(Transaction).toHaveBeenCalledTimes(2);
+      expect(spy).toHaveBeenCalledTimes(2);
     });
   });
 
   describe('.getStatements', () => {
+    TransactionHistory.prototype.viewStatements = jest.fn().mockImplementation(() => {
+      return ('date || credit || debit || balance\n' +
+      '01/02/2022 ||  || 500 || 0\n' +
+      '01/02/2022 || 500 ||  || 500\n');
+    });
+
     test('displays transaction statement from transactionHistory model', () => {
-      TransactionHistory.prototype.viewStatements = jest.fn().mockImplementation(() => {
-        return ('date || credit || debit || balance\n' +
-        '01/02/2022 ||  || 500 || 0\n' +
-        '01/02/2022 || 500 ||  || 500\n');
-      });
       expect(account.getStatements())
           .toEqual('date || credit || debit || balance\n' +
           '01/02/2022 ||  || 500 || 0\n' +
           '01/02/2022 || 500 ||  || 500\n');
+    });
+
+    test('TransactionHistory class is called', () => {
+      const spy = jest.spyOn(TransactionHistory.prototype, 'viewStatements');
+      account.getStatements();
+      expect(spy).toHaveBeenCalledTimes(1);
     });
   });
 });
