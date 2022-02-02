@@ -6,7 +6,7 @@ class TransactionHistory {
   addTransaction = (transaction) => this._transactions.push(transaction);
 
   viewStatements = () => {
-    let result = 'date || credit || debit || balance\n';
+    let result = this.#statementHeader()
 
     result += this._transactions.reverse()
         .map( (transaction) => this.#createStatement(transaction))
@@ -23,6 +23,8 @@ class TransactionHistory {
 
     return (`${date} || ${(credit || '')} || ${(debit || '')} || ${balance}\n`);
   };
+
+  #statementHeader = () => 'date || credit || debit || balance\n';
 }
 
 module.exports = TransactionHistory;
