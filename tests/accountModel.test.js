@@ -44,12 +44,11 @@ describe('Account', () => {
     });
 
     test('raises error if depositing 0', () => {
-      expect(account.deposit(0)).toEqual('Invalid amount')
+      expect(account.deposit(0)).toThrow('Invalid amount');
     });
 
     test('raises error if depositing less than 0', () => {
-      account.deposit(-1);
-      expect(account.deposit(0)).toEqual('Invalid amount')
+      expect(account.deposit(-1)).toThrow('Invalid amount');
     });
 
 

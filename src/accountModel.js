@@ -17,31 +17,29 @@ class Account {
 
   getBalance = () => this._balance;
 
-  getStatements = () => console.log (this._transactionHistoryModel.viewStatements());
+  getStatements = () => {
+    console.log(this._transactionHistoryModel.viewStatements());
+  };
 
   deposit = (value) => {
-    if (this.#invalidAmount(value)) {
-      return 'Invalid amount'
-    } else {
+    this.#invalidAmount(value)
+    
     this._balance += value;
-    this.#createTransaction({
+    return this.#createTransaction({
       credit: value,
-      balance: this._balance });
-    };
+      balance: this._balance
+    });
   };
 
   withdraw = (value) => {
-    if (this.#balanceBelowZero(value)) {
-      return `Insufficient funds - current balance: ${this._balance}`
-    } else if (this.#invalidAmount(value)) {
-      return 'Invalid amount'
-    } else {
-      this._balance -= value;
-      this.#createTransaction({
-        debit: value,
-        balance: this._balance,
-      });
-    };
+    this.#balanceBelowZero(value)
+    this.#invalidAmount(value)
+     
+    this._balance -= value;
+    return this.#createTransaction({
+      debit: value,
+      balance: this._balance,
+    });
   };
 
   #createTransaction = ({credit = null, debit = null, balance}) => {
@@ -53,12 +51,16 @@ class Account {
   };
 
   #balanceBelowZero = (value) => {
-    return this._balance - value < 0;
+    if (this._balance - value < 0) {
+      throw new Error(`Insufficient funds - current balance: ${this._balance}`);
+    };
   };
 
   #invalidAmount = (value) => {
-    return value <= 0;
+    if (value <= 0) {
+      throw new Error('Invalid amount');
+    };
   };
-}
+};
 
 module.exports = Account;
