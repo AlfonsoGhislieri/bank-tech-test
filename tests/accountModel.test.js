@@ -44,11 +44,15 @@ describe('Account', () => {
     });
 
     test('raises error if depositing 0', () => {
-      expect(account.deposit(0)).toThrow('Invalid amount');
+      expect( () => { 
+        account.deposit(0).toThrow('Invalid amount');
+      });
     });
 
     test('raises error if depositing less than 0', () => {
-      expect(account.deposit(-1)).toThrow('Invalid amount');
+      expect( () => { 
+        account.deposit(-1).toThrow('Invalid amount');
+      });
     });
 
 
@@ -63,15 +67,21 @@ describe('Account', () => {
 
   describe('.withdraw', () => {
     test('raises error if withdrawing more money than in balance', () => {
-      expect(account.withdraw(500)).toEqual('Insufficient funds - current balance: 0');
+      expect( () => { 
+        account.withdraw(500).toThrow('Insufficient funds - current balance: 0');
+      });
     });
 
     test('raises error if withdrawing 0', () => {
-      expect(account.withdraw(0)).toEqual('Invalid amount');
+      expect( () => { 
+        account.withdraw(0).toThrow('Invalid amount');
+      });
     });
 
     test('raises error if withdrawing less than 0', () => {
-      expect(account.withdraw(-1)).toEqual('Invalid amount');
+      expect( () => { 
+        account.withdraw(-1).toThrow('Invalid amount');
+      });
     });
 
     test('lowers balance', () => {
