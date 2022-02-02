@@ -22,19 +22,19 @@ class Account {
   };
 
   deposit = (value) => {
-    this.#invalidAmount(value)
-    
+    this.#invalidAmount(value);
+
     this._balance += value;
     return this.#createTransaction({
       credit: value,
-      balance: this._balance
+      balance: this._balance,
     });
   };
 
   withdraw = (value) => {
-    this.#balanceBelowZero(value)
-    this.#invalidAmount(value)
-     
+    this.#balanceBelowZero(value);
+    this.#invalidAmount(value);
+
     this._balance -= value;
     return this.#createTransaction({
       debit: value,

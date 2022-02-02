@@ -16,9 +16,8 @@ npm install
 
 ### Usage
 ```
-node
-const Client = require('./src/clientModel.js');
-const Account = require('./src/accountModel.js');
+node 
+.load app.js
 
 const user = new Client({name: 'User'});
 const account = new Account({client: user});

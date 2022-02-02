@@ -42,7 +42,7 @@ describe('TransactionHistory', () => {
       transactionHistory.addTransaction(transactionMock2);
 
       expect(transactionHistory.viewStatements())
-        .toEqual('date || credit || debit || balance\n' +
+          .toEqual('date || credit || debit || balance\n' +
           '03/02/2022 ||  || 500 || 0\n' +
           '01/02/2022 || 500 ||  || 500\n');
     });
